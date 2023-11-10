@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: decoya-challenge
+  labels:
+    run: decoya-challenge
+spec:
+  containers:
+    - name: test-container
+      image: vladbronfman/decoya-assignment
+      #command: [ "/bin/sh","-c"," sleep 1h" ]
+      volumeMounts:
+      - name: config-volume
+        mountPath: /var/www/html/config/hardcoded
+      - name: share-vol
+        mountPath: /var/www/html/config
+      ports:
+      - containerPort: 8080
+  initContainers:
+  - name: init-myservice
+    image: busybox:1.28
+    command: ['sh', '-c', "hostname -f > /data/filetoreadfrom"]      
+    volumeMounts:
+      - name: share-vol
+        mountPath: /data
+  volumes:
+    - name: share-vol
+      emptyDir: {}
+    - name: config-volume
+      configMap:
+        name: myconfig
+  restartPolicy: Never

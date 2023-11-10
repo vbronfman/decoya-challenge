@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Display Date, Time, and Machine Name</title>
+</head>
+<body>
+    <div id="date-time"></div>
+    <div id="machine-name"></div>
+ 
+    <script>
+        // Function to get the current local date and time
+        function getCurrentDateTime() {
+            const now = new Date();
+            return now.toLocaleString();
+        }
+
+// Function to fetch the machine name from the 'filename' file
+// grabed here https://dev.to/ramonak/javascript-how-to-access-the-return-value-of-a-promise-object-1bck
+        async function getMachineName(filename){
+          let response = await fetch(filename)
+          let hostname = await response.text()
+          console.log("Got hostname from file: "+ hostname);
+          return hostname; //returns Promise
+        }
+
+// async function  getMachineName(filename){
+// const a = await readfile(filename);
+// console.log("Got filename: "+ a);
+//   return a;
+// };
+
+        // Update the HTML content with the date, time, and machine name
+        async function updateContent() {
+            const dateTimeElement = document.getElementById("date-time");
+            const machineNameElement = document.getElementById("machine-name");
+
+            const currentDateTime = getCurrentDateTime();
+            const machineName = await getMachineName("config/filetoreadfrom"); //hardcoded value due to sandbox restrictions... 
+
+            dateTimeElement.textContent = "Current Date and Time: " + currentDateTime;
+            machineNameElement.textContent = "Name of the current machine: " + machineName;
+        }
+
+        // Call the updateContent function when the page loads
+        window.onload = updateContent;
+    </script>
+</body>
+</html>
+
