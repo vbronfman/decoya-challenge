@@ -153,6 +153,9 @@ __checkDatetime : PASSED__
 
 __checkHostnameifany : PASSED__
 
+## Removal of deployment
+_terraform destroy_
+
 
 # References
 https://dev.to/ramonak/javascript-how-to-access-the-return-value-of-a-promise-object-1bck
