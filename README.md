@@ -1,31 +1,41 @@
+# Description
+The project implements requirements to create Web page to show:
 
-COPY  index.html /var/www/html
-#  /etc/nginx/http.d/default.conf have to substitute with custom or edit location / to add:
+  - current local date and time
+  - name of the current machine.
+  
+  ## NOTE  
+  Then it comes to this one, my assamption is name of the host aka k8s pod the site runs upon.
+  In case, it should be name of client host from which deployment is done - there is slightly different implemention (see note "Configmap")
+
+# Implementation
+
+Files of the project are located in Github. To start with the project do fetch and expend it with git:
 
 
-/etc/nginx/http.d/default.conf:
-   # This is a default site configuration which will simply return 404, preventing
-# chance access to any other virtualhost.
+_git clone https://github.com/vbronfman/decoya-challenge.git_
+_git cd decoya-challenge_
 
-server {
-        listen 80 default_server;
-        listen [::]:80 default_server;
 
-        # Everything is a 404
-        location / {
-#               return 404;
-        root /var/www/html ;
-        index index.html ;
-        }
+# Docker image
 
-        # You may need this to prevent return 404 recursion.
-        location = /404.html {
-                internal;
-        }
-}
+The docker image is built with docker client by means of ./Dockerfile.
+
+The customisations are done:
+
+- custom index.html to run business logic
+
+- Turns out there is a need to tweek nginx that comes out apk package of nginx. Namely, file /etc/nginx/http.d/default.conf overridden with custom version.
+
+- root set to _/var/www/html_
+
+- Due to container to run as non-root user there is a need to grant access to files of nginx. For the same, it turns out there is no way to bind port 80 as non-root, so default set 8080.
+
+
 
 
 ## BUILD 
+git clone 
 docker build -t vladbronfman/my-nginx-image -f Dockerfile .
 
 root_admin@PCBANG:/mnt/d/Develop/decoya-challenge$ docker tag my-nginx-image:latest vladbronfman/decoya-assignment
@@ -64,8 +74,7 @@ root_admin@PCBANG:/mnt/d/Develop/decoya-challenge$ kubectl port-forward -n decoy
 ## Deploy into k8s cluster with terraform
 
 
-git clone https://github.com/vbronfman/decoya-challenge.git
-git cd decoya-challenge
+
 
 terraform init
 terraform apply 

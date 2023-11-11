@@ -33,7 +33,7 @@ resource "kubernetes_deployment" "challenge" {
       }
       spec {
         container {
-          image = "vladbronfman/decoya-assignment:latest"
+          image = var.imagename
           name  = "decoya-assignment-container"
           port {
             container_port = 8080
