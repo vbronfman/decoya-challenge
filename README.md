@@ -54,7 +54,7 @@ Init container populates name of the pod into file of well-known location: __/va
 For simplicity sake the project makes no use of proper Python testing frameworks and approaches like pytest. as a substitute the script runs  over data upon web page straightforwardly.
 
 The project employs Selenium framework to test dynamic content of page.
-Python script performs followinf test:
+Python script performs following test:
 
   - ID of element ot represent date is exists and not empty
   - value of 'date' in text is equil to current date 
@@ -74,6 +74,7 @@ Python script performs followinf test:
 Files of the project are located in Github. To start with the project do fetch and expend it with git:
 
 _git clone https://github.com/vbronfman/decoya-challenge.git_
+
 _cd decoya-challenge_
 
 
@@ -116,22 +117,29 @@ _terraform apply -auto-approve --var namespaceifany="new namespace"_ \
 1. Install required modules:
 
 _pip install selenium,datetime,re_
+
 _pip install kubernetes_
+
 or 
+
 _python3 -m pip install selenium,selenium,datetime,re_
+
 _python3 -m pip install kubernetes_
 
 2. Run script __site-scrapper.py__ :
+   
 _python3 site-scrapper.py_
 
 ## Usage:
 Usage: site-scrapper.py [-h] [-u URL] [-n NAMESPACE]
 
 options:
+
   -h, --help            show this help message and exit
+  
   -u URL, --url URL     URL to test. default is http://localhost/
-  -n NAMESPACE, --namespace NAMESPACE
-                        k8s namespaces to search for corresponding resources. Default is decoya-assignment
+  
+  -n NAMESPACE, --namespace NAMESPACE k8s namespaces to search for corresponding resources. Default is decoya-assignment
 
 ### Example:
         python3 site-scrapper.py -u http://pcbang/
@@ -140,7 +148,9 @@ options:
 The script uses logger for output. Debug output redirected to debug.log in current folder. "INFO" is printed to terminal:
 
 __Results:__
+
 __checkDatetime : PASSED__
+
 __checkHostnameifany : PASSED__
 
 
