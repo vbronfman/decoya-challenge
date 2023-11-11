@@ -3,7 +3,7 @@
 
 resource "kubernetes_namespace" "challenge" {
   metadata {
-    name = "decoya-assignment"
+    name = var.namespaceifany
   }
 }
 
@@ -14,7 +14,7 @@ resource "kubernetes_deployment" "challenge" {
   }
 
   spec {
-    replicas = 1
+    replicas = var.numofreplicas
     selector {
       match_labels = {
         app = "DecoyaAssignment"
