@@ -98,29 +98,6 @@ resource "kubernetes_service" "challenge" {
 
 
 #Ingress
-# resource "kubernetes_ingress" "challenge" {
-#   metadata {
-#     annotations {
-#       "kubernetes.io/ingress.class"                 = "nginx"
-#     }
-#     name      = "decoya-assignment-ing"
-#     namespace = "${kubernetes_namespace.monitoring.metadata.0.name}"
-#   }
-#   spec {
-#     rule {
-# #       host = "grafana.aperogeek.fr"
-#       http {
-#         path {
-#           backend {
-#             service_name = "${kubernetes_service.decoya-assignment-svc.metadata.0.name}"
-#             service_port = 8080
-#           }
-#         }
-#       }
-#     }
-#   }
-# }
-
 
 #https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/ingress
 # resource "kubernetes_ingress" "example" {
@@ -153,9 +130,9 @@ resource "kubernetes_service" "challenge" {
 resource "kubernetes_ingress_v1" "challenge" {
   metadata {
     name = "decoya-assignment-ing"
-    namespace = "${kubernetes_namespace.challenge.metadata.0.name}"
-
+    namespace = kubernetes_namespace.challenge.metadata.0.name
   }
+
   spec {
     ingress_class_name = "nginx"
     rule {
