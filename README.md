@@ -70,7 +70,7 @@ Python script performs following test:
 5. Kubernetes cluster available, kubectl configuration properly set in ~/.kube/config.
 6. Python3 and access to public PIP repo.
 
-
+## CLONE
 Files of the project are located in Github. To start with the project do fetch and expend it with git:
 
 _git clone https://github.com/vbronfman/decoya-challenge.git_
