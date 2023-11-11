@@ -43,8 +43,10 @@ resource "kubernetes_deployment" "challenge" {
             mount_path = "/var/www/html/config"
           }
 
+          image_pull_policy = "Always" 
+
           liveness_probe {
-            tcp_socket {
+            tcp_socket { #http_get 
               port = 8080
             }
             failure_threshold     = 3
@@ -95,7 +97,7 @@ resource "kubernetes_service" "challenge" {
 }
 
 
-# Ingress
+#Ingress
 # resource "kubernetes_ingress" "challenge" {
 #   metadata {
 #     annotations {
@@ -106,11 +108,38 @@ resource "kubernetes_service" "challenge" {
 #   }
 #   spec {
 #     rule {
-##       host = "grafana.aperogeek.fr"
+# #       host = "grafana.aperogeek.fr"
 #       http {
 #         path {
 #           backend {
 #             service_name = "${kubernetes_service.decoya-assignment-svc.metadata.0.name}"
+#             service_port = 8080
+#           }
+#         }
+#       }
+#     }
+#   }
+# }
+
+
+#https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/ingress
+# resource "kubernetes_ingress" "example" {
+#   wait_for_load_balancer = true
+#   metadata {
+#     name = "decoya-assignment-ing"
+#     namespace = "${kubernetes_namespace.challenge.metadata.0.name}"
+
+#     # annotations = {
+#     #   "kubernetes.io/ingress.class" = "nginx"
+#     # }
+#   }
+#   spec {
+#     rule {
+#       http {
+#         path {
+#           path = "/"
+#           backend {
+#             service_name = kubernetes_service.challenge.metadata.0.name
 #             service_port = 80
 #           }
 #         }
@@ -118,3 +147,31 @@ resource "kubernetes_service" "challenge" {
 #     }
 #   }
 # }
+
+#https://stackoverflow.com/questions/70497809/terraform-fails-to-create-ingress-could-not-find-the-requested-resource-ingress
+
+resource "kubernetes_ingress_v1" "challenge" {
+  metadata {
+    name = "decoya-assignment-ing"
+    namespace = "${kubernetes_namespace.challenge.metadata.0.name}"
+
+  }
+  spec {
+    ingress_class_name = "nginx"
+    rule {
+      http {
+        path {
+          path = "/"
+          backend {
+            service {
+              name = kubernetes_service.challenge.metadata.0.name
+              port {
+                number = 80
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
