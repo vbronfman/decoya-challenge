@@ -160,6 +160,14 @@ _terraform destroy_
 # References
 https://dev.to/ramonak/javascript-how-to-access-the-return-value-of-a-promise-object-1bck
 
+https://www.turing.com/blog/javascript-fetch-api-guide/
+
+https://wiki.alpinelinux.org/wiki/Nginx
+
+https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/guides/getting-started
+
 https://pythonexamples.org/python-selenium-get-div-with-specific-id/
+
 https://www.zenrows.com/blog/scraping-javascript-rendered-web-pages
+
 https://www.browserstack.com/guide/python-selenium-to-run-web-automation-test 
